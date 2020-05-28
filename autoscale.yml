@@ -2,27 +2,41 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  vars_prompt:
+  #vars:
   #user enters the name of the ami image to make an autoscaling group from
-   - name: image
-     prompt: "enter the AMI image id"
-     private: no
+   # name: image
+   # image: "{{image}}"
+   #  prompt: "enter the AMI image id"
+   #  private: no
  
   #user enters the name that will be used to name everything else in the architecture
-   - name: architecture
-     prompt: "enter the desired name for your infastructure"
-     private: no
+   # name: architecture
+   #  prompt: "enter the desired name for your infastructure"
+   #  private: no
+   #architecture: "{{architecture}}"
 
   vars:
+   image: "{{image}}"
+   architecture: "{{architecture}}"
    loadb: "{{architecture}}-lb"
    auto_sc:  "{{architecture}}_asg"
    lc: "{{architecture}}_lc"
+   ami_access: "{{ami_access}}"
+   ami_secret: "{{ami_secret}}"
+   #your keypair
+   keypair: "{{keypair}}"
+   #your security group
+   group: "{{group}}"
+   #the subnet you want to use, found in the vpc menu
+   subnetID: "{{subnetID}}"
+   #the region of the subnet you are using
+   regi: "{{regi}}"
 
-  vars_files:
+  #vars_files:
     #contains the variables ami_access and ami_secret  
-    - amiKeys.yml
+  #  - amiKeys.yml
     #contains the variables keypair, group, subnetID and regi
-    - regionInfo.yml
+  #  - regionInfo.yml
 
   tasks:
    #http://stackoverflow.com/questions/34016583/ansible-ec2-elb-lb-https-to-http-error
